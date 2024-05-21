@@ -1,0 +1,25 @@
+name: Run Boot Sequence
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+    - name: Run Boot Sequence
+      run: java -cp target/classes OldSchoolBootSequence
